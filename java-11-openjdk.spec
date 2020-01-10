@@ -188,7 +188,7 @@
 
 # New Version-String scheme-style defines
 %global majorver 11
-%global securityver 4
+%global securityver 5
 # buildjdkver is usually same as %%{majorver},
 # but in time of bootstrap of next jdk, it is majorver-1, 
 # and this it is better to change it here, on single place
@@ -210,8 +210,8 @@
 %global origin_nice     OpenJDK
 %global top_level_dir_name   %{origin}
 %global minorver        0
-%global buildver        11
-%global rpmrelease      1
+%global buildver        10
+%global rpmrelease      0
 #%%global tagsuffix      %{nil}
 # priority must be 7 digits in total
 # setting to 1, so debug ones can have 0
@@ -938,10 +938,6 @@ Patch1000: rh1648249-add_commented_out_nss_cfg_provider_to_java_security.patch
 Patch1:    rh1648242-accessible_toolkit_crash_do_not_break_jvm.patch
 # Restrict access to java-atk-wrapper classes
 Patch2:    rh1648644-java_access_bridge_privileged_security.patch
-# PR1834, RH1022017: Reduce curves reported by SSL to those in NSS
-# Not currently suitable to go upstream as it disables curves
-# for all providers unconditionally
-Patch525: rh1022017-reduce_ssl_curves.patch
 Patch3:    rh649512-remove_uses_of_far_in_jpeg_libjpeg_turbo_1_4_compat_for_jdk10_and_up.patch
 # Follow system wide crypto policy RHBZ#1249083
 Patch4:    pr3183-rh1340845-support_fedora_rhel_system_crypto_policy.patch
@@ -1237,7 +1233,6 @@ pushd %{top_level_dir_name}
 %patch6 -p1
 %patch7 -p1
 %patch8 -p1
-%patch525 -p1
 popd # openjdk
 
 %patch1000
@@ -1787,6 +1782,25 @@ require "copy_jdk_configs.lua"
 %endif
 
 %changelog
+* Wed Oct 09 2019 Andrew Hughes <gnu.andrew@redhat.com> - 1:11.0.5.10-0
+- Update to shenandoah-jdk-11.0.5+10 (GA)
+- Switch to GA mode for final release.
+- Remove PR1834/RH1022017 which is now handled by JDK-8228825 upstream.
+- Resolves: rhbz#1753423
+
+* Wed Oct 09 2019 Andrew Hughes <gnu.andrew@redhat.com> - 1:11.0.5.9-0.0.ea
+- Update to shenandoah-jdk-11.0.5+9 (EA)
+- Resolves: rhbz#1753423
+
+* Fri Sep 06 2019 Andrew John Hughes <gnu.andrew@redhat.com> - 1:11.0.5.2-0.0.ea
+- Update to shenandoah-jdk-11.0.5+2 (EA)
+- Resolves: rhbz#1753423
+
+* Mon Aug 12 2019 Andrew Hughes <gnu.andrew@redhat.com> - 1:11.0.5.1-0.0.ea
+- Update to shenandoah-jdk-11.0.5+1 (EA)
+- Switch to EA mode for 11.0.5 pre-release builds.
+- Resolves: rhbz#1753423
+
 * Tue Jul 09 2019 Andrew Hughes <gnu.andrew@redhat.com> - 1:11.0.4.11-1
 - Update to shenandoah-jdk-11.0.4+11 (GA)
 - Switch to GA mode for final release.
